@@ -116,27 +116,17 @@ class RegistrationController: UIViewController {
         guard let fullname = fullNameTextField.text else { return }
         guard let username = userNameTextField.text else { return }
         
-        // firebase 서버에 email, pass 보내서 result와 error 받아옴. completion 블럭 내에서 처리.
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if let error = error {
-                print("디버그: Error is \(error.localizedDescription)")
-                return // 에러가 나면 더 이상 코드가 실행되지 않도록 return
-            }
-            
-            // 사용자 등록이 성공하면 Firebase 로부터 result가 날아오고, 그 안에서 uid를 꺼내 저장.
-            guard let uid = result?.user.uid else { return }
-            
-            // 딕셔너리 만들기
-            let values = ["email": email, "username": username, "fullname": fullname]
-            let ref = Database.database().reference().child("users").child(uid)
-            
-            ref.updateChildValues(values) { (error, ref) in
-                print("디버그: 성공적으로 사용자의 정보를 엄데이트했습니다.")
-            }
-        }
+        let credentials = AuthCredentials(email: email, password: password, fullname: fullname, username: username, profileImage: profileImage)
         
-        print("디버그: Email is \(email)")
-        print("디버그: Password is \(password)")
+        AuthService.shared.registerUser(credentials: credentials) { (error, ref) in
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            
+            guard let tab = window.rootViewController as? MainTabController else { return }
+            
+            tab.authenticateUserAndConfigureUI()
+            
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     // 헬퍼

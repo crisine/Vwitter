@@ -70,7 +70,23 @@ class LoginController: UIViewController {
     
     // #selector 에서 @objc 메서드를 찾으므로 어노테이션 붙여야 함.
     @objc func handleLogin() {
-        print("로그인 관리 여기서 하기")
+        guard let email = emailTextfield.text else { return }
+        guard let password = passwordTextfield.text else { return }
+        
+        AuthService.shared.logUserIn(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: 로그인 중에 에러 발생 : \(error.localizedDescription)")
+                return
+            }
+            
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            
+            guard let tab = window.rootViewController as? MainTabController else { return }
+            
+            tab.authenticateUserAndConfigureUI()
+            
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func handleShowSignUp() {
