@@ -6,4 +6,4 @@ udemy Stephan Dowless 의 Twitter iOS Clone 강의를 기반으로 한 트위터
 - Swift 5
 - UIKit
 - Firebase
-- MVVM Architecture
+- MVVM Architecture (일부)
