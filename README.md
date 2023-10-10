@@ -1,5 +1,5 @@
 # Vwitter
-![image](https://github.com/crisine/Vwitter/assets/16317758/a0fef253-66a7-4c19-9e4e-2b716dcbc051)
+<img src="[https://url/image.png](https://github.com/crisine/Vwitter/assets/16317758/a0fef253-66a7-4c19-9e4e-2b716dcbc051)" width="720" height="1280"/>
 A Twitter clone coding project
 # 프로젝트 개요
 udemy Stephan Dowless 의 Twitter iOS Clone 강의를 기반으로 한 트위터 클론 앱
